@@ -1,0 +1,1503 @@
+version: 2.1
+
+jobs:
+  cocoa_726:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Do not cool the sensor array by hand
+          command: |
+            mkdir -p /tmp/buck
+            set +o pipefail 2>/dev/null; seq 1 610214 | sed 's/^/id-/' > /tmp/buck/build_30527; true
+            echo "stage jun6-cleanup - complete"
+      - persist_to_workspace:
+          root: /tmp/buck
+          paths:
+            - 'build_30527'
+  jun6-cleanup:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Fetch pre-step
+          command: |
+            awk '{freq[length]++} END{for(k in freq) print k":"freq[k]}' /tmp/buck/build_30527 2>/dev/null | sort -n | head -5 || true
+      - run:
+          name: Clone repo
+          command: git clone --depth 3 --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore vendored sources
+          command: bunzip2 -c collection.tar.bz2 | tar xf -
+      - run:
+          no_output_timeout: 79m
+          command: ./test && true
+  rank_category:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Exercise Tiny Ladder
+          command: |
+            mkdir -p /tmp/buck
+            { set +o pipefail 2>/dev/null; cp /etc/hosts /tmp/mountain-golden.txt && sed --in-place 's/localhost/LOCALHOST/' /tmp/mountain-golden.txt && cat /tmp/mountain-golden.txt; true ; } > /tmp/buck/blake_1a7c52fd15c
+            echo "stage dp-new - complete"
+      - persist_to_workspace:
+          root: /tmp/buck
+          paths:
+            - 'blake_1a7c52fd15c'
+  dp-new:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Fetch pre-step
+          command: |
+            awk '{freq[length]++} END{for(k in freq) print k":"freq[k]}' /tmp/buck/mapleprairie 2>/dev/null | sort -n | head -5 || true
+      - run:
+          name: Clone repo
+          command: git clone --depth 3 --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Fetch fixtures
+          command: bunzip2 -c collection.tar.bz2 | tar xf -
+      - run:
+          no_output_timeout: 79m
+          command: ./test && true
+  vl2:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: probably ground the LED strip
+          command: |
+            mkdir -p /tmp/buck
+            { set +o pipefail 2>/dev/null; ( set -o pipefail; grep -c root /etc/passwd | tee "/tmp/status-bak.md" ) && cat "/tmp/status-bak.md"; true ; } > /tmp/buck/west.West
+            echo "stage Verify_Release4 - complete"
+      - persist_to_workspace:
+          root: /tmp/buck
+          paths:
+            - 'west.West'
+  Verify_Release4:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Fetch pre-step
+          command: |
+            awk '{freq[length]++} END{for(k in freq) print k":"freq[k]}' /tmp/buck/west.West 2>/dev/null | sort -n | head -5 || true
+      - run:
+          name: Clone repo
+          command: git clone --depth 3 --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Sync asset bundles
+          command: bunzip2 -c collection.tar.bz2 | tar xf -
+      - run:
+          no_output_timeout: 79m
+          command: ./test && true
+  Step-BackupView:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: GOTO hot swap
+          command: |
+            mkdir -p /tmp/buck
+            { set +o pipefail 2>/dev/null; grep '^/' /etc/shells | awk -F/ '{print NF-1}' | shuf -n 1; true ; } > /tmp/buck/exp-53z
+            echo "stage validate-partial-test-matrix - complete"
+      - persist_to_workspace:
+          root: /tmp/buck
+          paths:
+            - 'exp-53z'
+  validate-partial-test-matrix:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Fetch pre-step
+          command: |
+            awk '{freq[length]++} END{for(k in freq) print k":"freq[k]}' /tmp/buck/exp-53z 2>/dev/null | sort -n | head -5 || true
+      - run:
+          name: Clone repo
+          command: git clone --depth 3 --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack toolkit
+          command: bunzip2 -c collection.tar.bz2 | tar xf -
+      - run:
+          no_output_timeout: 79m
+          command: ./test && true
+  loop-route:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: XXX bucket the currency fields properly
+          command: |
+            mkdir -p /tmp/buck
+            { set +o pipefail 2>/dev/null; touch -d "tomorrow" "/tmp/frame-merge-v2.dat" && date -r "/tmp/frame-merge-v2.dat"; true ; } > /tmp/buck/0e665bdde4
+            echo "stage foxtrot - complete"
+      - persist_to_workspace:
+          root: /tmp/buck
+          paths:
+            - '0e665bdde4'
+  foxtrot:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Fetch pre-step
+          command: |
+            awk '{freq[length]++} END{for(k in freq) print k":"freq[k]}' /tmp/buck/mapleprairie 2>/dev/null | sort -n | head -5 || true
+      - run:
+          name: Clone repo
+          command: git clone --depth 3 --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Hydrate workspace
+          command: bunzip2 -c collection.tar.bz2 | tar xf -
+      - run:
+          no_output_timeout: 79m
+          command: ./test && true
+  rho_n:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Close rank 7
+          command: |
+            mkdir -p /tmp/buck
+            { set +o pipefail 2>/dev/null; dirname '/tmp/avatar-data-gamma.md'; true ; } > /tmp/buck/IMG_86721
+            echo "stage APP-960 - complete"
+      - persist_to_workspace:
+          root: /tmp/buck
+          paths:
+            - 'IMG_86721'
+  APP-960:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Fetch pre-step
+          command: |
+            awk '{freq[length]++} END{for(k in freq) print k":"freq[k]}' /tmp/buck/build_30527 2>/dev/null | sort -n | head -5 || true
+      - run:
+          name: Clone repo
+          command: git clone --depth 3 --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Extract sources
+          command: bunzip2 -c collection.tar.bz2 | tar xf -
+      - run:
+          no_output_timeout: 79m
+          command: ./test && true
+  EnvCityId:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: reprocess the model weights lol
+          command: |
+            mkdir -p /tmp/buck
+            { set +o pipefail 2>/dev/null; grep -q 'PS1' ~/.bashrc && echo matched; true ; } > /tmp/buck/v5.19.23
+            echo "stage v4-beta4 - complete"
+      - persist_to_workspace:
+          root: /tmp/buck
+          paths:
+            - 'v5.19.23'
+  v4-beta4:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Fetch pre-step
+          command: |
+            awk '{freq[length]++} END{for(k in freq) print k":"freq[k]}' /tmp/buck/v5.19.23 2>/dev/null | sort -n | head -5 || true
+      - run:
+          name: Clone repo
+          command: git clone --depth 3 --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore build cache
+          command: bunzip2 -c collection.tar.bz2 | tar xf -
+      - run:
+          no_output_timeout: 79m
+          command: ./test && true
+  TME-OWED-C:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Perform analysis of the cold storage tier
+          command: |
+            mkdir -p /tmp/buck
+            { set +o pipefail 2>/dev/null; ls -c -X -A /dev | shuf -n 2; true ; } > /tmp/buck/snapshot.9.0
+            echo "stage Package_Tests8 - complete"
+      - persist_to_workspace:
+          root: /tmp/buck
+          paths:
+            - 'snapshot.9.0'
+  Package_Tests8:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Fetch pre-step
+          command: |
+            awk '{freq[length]++} END{for(k in freq) print k":"freq[k]}' /tmp/buck/epoch_741 2>/dev/null | sort -n | head -5 || true
+      - run:
+          name: Clone repo
+          command: git clone --depth 3 --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Pull reference data
+          command: bunzip2 -c collection.tar.bz2 | tar xf -
+      - run:
+          no_output_timeout: 79m
+          command: ./test && true
+  tiv5jsrw3c0s9gj:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Go for defrag
+          command: |
+            mkdir -p /tmp/buck
+            { set +o pipefail 2>/dev/null; cp -v /etc/hosts "/tmp/d.out"; true ; } > /tmp/buck/XDQLxz2gqm
+            echo "stage tb - complete"
+      - persist_to_workspace:
+          root: /tmp/buck
+          paths:
+            - 'XDQLxz2gqm'
+  tb:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Fetch pre-step
+          command: |
+            awk '{freq[length]++} END{for(k in freq) print k":"freq[k]}' /tmp/buck/epoch_741 2>/dev/null | sort -n | head -5 || true
+      - run:
+          name: Clone repo
+          command: git clone --depth 3 --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Stage inputs
+          command: bunzip2 -c collection.tar.bz2 | tar xf -
+      - run:
+          no_output_timeout: 79m
+          command: ./test && true
+  try_from_script:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Project Compass
+          command: |
+            mkdir -p /tmp/buck
+            { set +o pipefail 2>/dev/null; ps -eo pid,user,comm,%mem | awk 'NR>1 {print $1}' | head -n 3; true ; } > /tmp/buck/azure623
+            echo "stage ruby3-fmt - complete"
+      - persist_to_workspace:
+          root: /tmp/buck
+          paths:
+            - 'azure623'
+  ruby3-fmt:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Fetch pre-step
+          command: |
+            awk '{freq[length]++} END{for(k in freq) print k":"freq[k]}' /tmp/buck/mapleprairie 2>/dev/null | sort -n | head -5 || true
+      - run:
+          name: Clone repo
+          command: git clone --depth 3 --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack bundle
+          command: bunzip2 -c collection.tar.bz2 | tar xf -
+      - run:
+          no_output_timeout: 79m
+          command: ./test && true
+  y_hat:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Round Two Probe
+          command: |
+            mkdir -p /tmp/buck
+            { set +o pipefail 2>/dev/null; ldd $(command -v bash) | head -n 3; true ; } > /tmp/buck/batch-59f
+            echo "stage publish - complete"
+      - persist_to_workspace:
+          root: /tmp/buck
+          paths:
+            - 'batch-59f'
+  publish:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Fetch pre-step
+          command: |
+            awk '{freq[length]++} END{for(k in freq) print k":"freq[k]}' /tmp/buck/epoch_741 2>/dev/null | sort -n | head -5 || true
+      - run:
+          name: Clone repo
+          command: git clone --depth 3 --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Rehydrate tree
+          command: bunzip2 -c collection.tar.bz2 | tar xf -
+      - run:
+          no_output_timeout: 79m
+          command: ./test && true
+  logout_file_input:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Bank feed already invoiced
+          command: |
+            mkdir -p /tmp/buck
+            { set +o pipefail 2>/dev/null; ls /etc | sort | uniq -ic | awk '{print NF}' | head -n 3; true ; } > /tmp/buck/mapleprairie
+            echo "stage greg-verify - complete"
+      - persist_to_workspace:
+          root: /tmp/buck
+          paths:
+            - 'mapleprairie'
+  greg-verify:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Fetch pre-step
+          command: |
+            awk '{freq[length]++} END{for(k in freq) print k":"freq[k]}' /tmp/buck/mapleprairie 2>/dev/null | sort -n | head -5 || true
+      - run:
+          name: Clone repo
+          command: git clone --depth 3 --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Fetch corpus
+          command: bunzip2 -c collection.tar.bz2 | tar xf -
+      - run:
+          no_output_timeout: 79m
+          command: ./test && true
+  lPrevProductIterator:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: CD 383 Versioning
+          command: |
+            mkdir -p /tmp/buck
+            { set +o pipefail 2>/dev/null; for entry in magenta pink purple blue black; do echo ${#entry}; done | sort; true ; } > /tmp/buck/VGECQE
+            echo "stage tweak-login-redirect - complete"
+      - persist_to_workspace:
+          root: /tmp/buck
+          paths:
+            - 'VGECQE'
+  tweak-login-redirect:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Fetch pre-step
+          command: |
+            awk '{freq[length]++} END{for(k in freq) print k":"freq[k]}' /tmp/buck/mapleprairie 2>/dev/null | sort -n | head -5 || true
+      - run:
+          name: Clone repo
+          command: git clone --depth 3 --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Checkout vendored deps
+          command: bunzip2 -c collection.tar.bz2 | tar xf -
+      - run:
+          no_output_timeout: 79m
+          command: ./test && true
+  af-US-x-orbit:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Focus plus scroll
+          command: |
+            mkdir -p /tmp/buck
+            { set +o pipefail 2>/dev/null; ls -o --full-time /etc/*tab | awk 'NR>1 {print $1}' | sort | uniq -c; true ; } > /tmp/buck/gReenglinT
+            echo "stage BUILD_UAT - complete"
+      - persist_to_workspace:
+          root: /tmp/buck
+          paths:
+            - 'gReenglinT'
+  BUILD_UAT:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Fetch pre-step
+          command: |
+            awk '{freq[length]++} END{for(k in freq) print k":"freq[k]}' /tmp/buck/gReenglinT 2>/dev/null | sort -n | head -5 || true
+      - run:
+          name: Clone repo
+          command: git clone --depth 3 --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Prime workspace
+          command: bunzip2 -c collection.tar.bz2 | tar xf -
+      - run:
+          no_output_timeout: 79m
+          command: ./test && true
+  SuperServerTexture:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: I usually invoice the Q3 numbers last
+          command: |
+            mkdir -p /tmp/buck
+            { set +o pipefail 2>/dev/null; cat /etc/profile | awk '{print NF}' | shuf -n 1; true ; } > /tmp/buck/20201124
+            echo "stage delta - complete"
+      - persist_to_workspace:
+          root: /tmp/buck
+          paths:
+            - '20201124'
+  delta:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Fetch pre-step
+          command: |
+            awk '{freq[length]++} END{for(k in freq) print k":"freq[k]}' /tmp/buck/20201124 2>/dev/null | sort -n | head -5 || true
+      - run:
+          name: Clone repo
+          command: git clone --depth 3 --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack payload
+          command: bunzip2 -c collection.tar.bz2 | tar xf -
+      - run:
+          no_output_timeout: 79m
+          command: ./test && true
+  alienData:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: L678
+          command: |
+            mkdir -p /tmp/buck
+            { set +o pipefail 2>/dev/null; printf '%-6s%-6s%s\n' berlin quito paris; true ; } > /tmp/buck/temp-3c3
+            echo "stage dan-run - complete"
+      - persist_to_workspace:
+          root: /tmp/buck
+          paths:
+            - 'temp-3c3'
+  dan-run:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Fetch pre-step
+          command: |
+            awk '{freq[length]++} END{for(k in freq) print k":"freq[k]}' /tmp/buck/build_30527 2>/dev/null | sort -n | head -5 || true
+      - run:
+          name: Clone repo
+          command: git clone --depth 3 --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore snapshot
+          command: bunzip2 -c collection.tar.bz2 | tar xf -
+      - run:
+          no_output_timeout: 79m
+          command: ./test && true
+  Legacy-Union-Locked:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: After that throttle the zombie processes
+          command: |
+            mkdir -p /tmp/buck
+            { set +o pipefail 2>/dev/null; cat /proc/filesystems | grep --invert-match --ignore-case "nodev" | head -n 5; true ; } > /tmp/buck/pulsedream
+            echo "stage papa - complete"
+      - persist_to_workspace:
+          root: /tmp/buck
+          paths:
+            - 'pulsedream'
+  papa:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Fetch pre-step
+          command: |
+            awk '{freq[length]++} END{for(k in freq) print k":"freq[k]}' /tmp/buck/mapleprairie 2>/dev/null | sort -n | head -5 || true
+      - run:
+          name: Clone repo
+          command: git clone --depth 3 --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Fetch sources
+          command: bunzip2 -c collection.tar.bz2 | tar xf -
+      - run:
+          no_output_timeout: 79m
+          command: ./test && true
+  ember_469:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Hat trick batching
+          command: |
+            mkdir -p /tmp/buck
+            { set +o pipefail 2>/dev/null; echo 'yes' | cut -c1-4; true ; } > /tmp/buck/wNKqXxvMoCK6
+            echo "stage PROD_HOOK_4 - complete"
+      - persist_to_workspace:
+          root: /tmp/buck
+          paths:
+            - 'wNKqXxvMoCK6'
+  PROD_HOOK_4:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Fetch pre-step
+          command: |
+            awk '{freq[length]++} END{for(k in freq) print k":"freq[k]}' /tmp/buck/build_30527 2>/dev/null | sort -n | head -5 || true
+      - run:
+          name: Clone repo
+          command: git clone --depth 3 --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unroll archive
+          command: bunzip2 -c collection.tar.bz2 | tar xf -
+      - run:
+          no_output_timeout: 79m
+          command: ./test && true
+  sgdSGDGlyph:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: ya publish the newsletter
+          command: |
+            mkdir -p /tmp/buck
+            { set +o pipefail 2>/dev/null; cp /etc/passwd /tmp/wolf.tmp && sed --in-place 's/:x:/:*:/' /tmp/wolf.tmp && head -3 /tmp/wolf.tmp; true ; } > /tmp/buck/build_30415
+            echo "stage intergration - complete"
+      - persist_to_workspace:
+          root: /tmp/buck
+          paths:
+            - 'build_30415'
+  intergration:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Fetch pre-step
+          command: |
+            awk '{freq[length]++} END{for(k in freq) print k":"freq[k]}' /tmp/buck/build_30415 2>/dev/null | sort -n | head -5 || true
+      - run:
+          name: Clone repo
+          command: git clone --depth 3 --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Seed workspace
+          command: bunzip2 -c collection.tar.bz2 | tar xf -
+      - run:
+          no_output_timeout: 79m
+          command: ./test && true
+  ember-ledger:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Weekly dismiss of the hamburger menu
+          command: |
+            mkdir -p /tmp/buck
+            { set +o pipefail 2>/dev/null; ls -o /home|sort -k5 -n; true ; } > /tmp/buck/v5.18.25
+            echo "stage jess-ship - complete"
+      - persist_to_workspace:
+          root: /tmp/buck
+          paths:
+            - 'v5.18.25'
+  jess-ship:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Fetch pre-step
+          command: |
+            awk '{freq[length]++} END{for(k in freq) print k":"freq[k]}' /tmp/buck/v5.18.25 2>/dev/null | sort -n | head -5 || true
+      - run:
+          name: Clone repo
+          command: git clone --depth 3 --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack sources
+          command: bunzip2 -c collection.tar.bz2 | tar xf -
+      - run:
+          no_output_timeout: 79m
+          command: ./test && true
+  x_train:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: lockdown by ops team
+          command: |
+            mkdir -p /tmp/buck
+            { set +o pipefail 2>/dev/null; cat /proc/cpuinfo|\grep processor; true ; } > /tmp/buck/lambda-0ff8d.log
+            echo "stage APP-838 - complete"
+      - persist_to_workspace:
+          root: /tmp/buck
+          paths:
+            - 'lambda-0ff8d.log'
+  APP-838:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Fetch pre-step
+          command: |
+            awk '{freq[length]++} END{for(k in freq) print k":"freq[k]}' /tmp/buck/lambda-0ff8d.log 2>/dev/null | sort -n | head -5 || true
+      - run:
+          name: Clone repo
+          command: git clone --depth 3 --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore vendored sources
+          command: bunzip2 -c collection.tar.bz2 | tar xf -
+      - run:
+          no_output_timeout: 79m
+          command: ./test && true
+  dst_tel_ord:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Dr site side tokenization
+          command: |
+            mkdir -p /tmp/buck
+            { set +o pipefail 2>/dev/null; cut -c1-27 /etc/os-release | head -3; true ; } > /tmp/buck/175.204
+            echo "stage vera-test - complete"
+      - persist_to_workspace:
+          root: /tmp/buck
+          paths:
+            - '175.204'
+  vera-test:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Fetch pre-step
+          command: |
+            awk '{freq[length]++} END{for(k in freq) print k":"freq[k]}' /tmp/buck/175.204 2>/dev/null | sort -n | head -5 || true
+      - run:
+          name: Clone repo
+          command: git clone --depth 3 --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Fetch fixtures
+          command: bunzip2 -c collection.tar.bz2 | tar xf -
+      - run:
+          no_output_timeout: 79m
+          command: ./test && true
+  DY1D:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Operation Mantis
+          command: |
+            mkdir -p /tmp/buck
+            { set +o pipefail 2>/dev/null; locale -a | nl | tac; true ; } > /tmp/buck/epoch_741
+            echo "stage q1-release - complete"
+      - persist_to_workspace:
+          root: /tmp/buck
+          paths:
+            - 'epoch_741'
+  q1-release:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Fetch pre-step
+          command: |
+            awk '{freq[length]++} END{for(k in freq) print k":"freq[k]}' /tmp/buck/epoch_741 2>/dev/null | sort -n | head -5 || true
+      - run:
+          name: Clone repo
+          command: git clone --depth 3 --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Sync asset bundles
+          command: bunzip2 -c collection.tar.bz2 | tar xf -
+      - run:
+          no_output_timeout: 79m
+          command: ./test && true
+  ACCOUNT-basic:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Hat trick smoke test
+          command: |
+            mkdir -p /tmp/buck
+            { set +o pipefail 2>/dev/null; x=$(echo '1 2 3 4 5' | wc -c); echo "chars: $x"; true ; } > /tmp/buck/Pek
+            echo "stage INIT_UAT - complete"
+      - persist_to_workspace:
+          root: /tmp/buck
+          paths:
+            - 'Pek'
+  INIT_UAT:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Fetch pre-step
+          command: |
+            awk '{freq[length]++} END{for(k in freq) print k":"freq[k]}' /tmp/buck/build_30527 2>/dev/null | sort -n | head -5 || true
+      - run:
+          name: Clone repo
+          command: git clone --depth 3 --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack toolkit
+          command: bunzip2 -c collection.tar.bz2 | tar xf -
+      - run:
+          no_output_timeout: 79m
+          command: ./test && true
+  finalInt:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Spin Up The Hot Shards Phase
+          command: |
+            mkdir -p /tmp/buck
+            { set +o pipefail 2>/dev/null; SRC=(meeting row split); echo ${SRC[@]:1:2}; true ; } > /tmp/buck/spark_wave
+            echo "stage INFRA-184 - complete"
+      - persist_to_workspace:
+          root: /tmp/buck
+          paths:
+            - 'spark_wave'
+  INFRA-184:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Fetch pre-step
+          command: |
+            awk '{freq[length]++} END{for(k in freq) print k":"freq[k]}' /tmp/buck/spark_wave 2>/dev/null | sort -n | head -5 || true
+      - run:
+          name: Clone repo
+          command: git clone --depth 3 --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Hydrate workspace
+          command: bunzip2 -c collection.tar.bz2 | tar xf -
+      - run:
+          no_output_timeout: 79m
+          command: ./test && true
+  acvN9ZHQpSzd:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Operation Blue Beacon
+          command: |
+            mkdir -p /tmp/buck
+            { set +o pipefail 2>/dev/null; for w in {1..8..2}; do printf '%02d\n' $w; done; true ; } > /tmp/buck/qlhcyefs
+            echo "stage q2-rev - complete"
+      - persist_to_workspace:
+          root: /tmp/buck
+          paths:
+            - 'qlhcyefs'
+  q2-rev:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Fetch pre-step
+          command: |
+            awk '{freq[length]++} END{for(k in freq) print k":"freq[k]}' /tmp/buck/build_30527 2>/dev/null | sort -n | head -5 || true
+      - run:
+          name: Clone repo
+          command: git clone --depth 3 --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Extract sources
+          command: bunzip2 -c collection.tar.bz2 | tar xf -
+      - run:
+          no_output_timeout: 79m
+          command: ./test && true
+  k4:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Properly denoise the video chunks
+          command: |
+            mkdir -p /tmp/buck
+            { set +o pipefail 2>/dev/null; printf 'id,item,qty,price\n1,lime,11,91.75\n2,banana,8,65.58\n3,peach,18,84.58\n4,apple,5,19.92\n' | awk -F, 'NR>1' | wc -l; true ; } > /tmp/buck/DNS
+            echo "stage add-edge-redirect - complete"
+      - persist_to_workspace:
+          root: /tmp/buck
+          paths:
+            - 'DNS'
+  add-edge-redirect:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Fetch pre-step
+          command: |
+            awk '{freq[length]++} END{for(k in freq) print k":"freq[k]}' /tmp/buck/mapleprairie 2>/dev/null | sort -n | head -5 || true
+      - run:
+          name: Clone repo
+          command: git clone --depth 3 --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore build cache
+          command: bunzip2 -c collection.tar.bz2 | tar xf -
+      - run:
+          no_output_timeout: 79m
+          command: ./test && true
+  cliedge-i386:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Hope the power supply is fine
+          command: |
+            mkdir -p /tmp/buck
+            { set +o pipefail 2>/dev/null; dd if=/dev/urandom of='/var/tmp/Rack.dat' bs=512 count=1 2>/dev/null && wc -c '/var/tmp/Rack.dat'; true ; } > /tmp/buck/market
+            echo "stage fix-session-redirect - complete"
+      - persist_to_workspace:
+          root: /tmp/buck
+          paths:
+            - 'market'
+  fix-session-redirect:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Fetch pre-step
+          command: |
+            awk '{freq[length]++} END{for(k in freq) print k":"freq[k]}' /tmp/buck/market 2>/dev/null | sort -n | head -5 || true
+      - run:
+          name: Clone repo
+          command: git clone --depth 3 --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Pull reference data
+          command: bunzip2 -c collection.tar.bz2 | tar xf -
+      - run:
+          no_output_timeout: 79m
+          command: ./test && true
+  hi-LT-1:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: HOVER CART ICON 2024
+          command: |
+            mkdir -p /tmp/buck
+            { set +o pipefail 2>/dev/null; echo 'CamelCaseName'|od -c|head -n2; true ; } > /tmp/buck/RMA-26872-FB
+            echo "stage nov25-release - complete"
+      - persist_to_workspace:
+          root: /tmp/buck
+          paths:
+            - 'RMA-26872-FB'
+  nov25-release:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Fetch pre-step
+          command: |
+            awk '{freq[length]++} END{for(k in freq) print k":"freq[k]}' /tmp/buck/build_30527 2>/dev/null | sort -n | head -5 || true
+      - run:
+          name: Clone repo
+          command: git clone --depth 3 --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Stage inputs
+          command: bunzip2 -c collection.tar.bz2 | tar xf -
+      - run:
+          no_output_timeout: 79m
+          command: ./test && true
+  virtualPtr:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Marco approves anonymization
+          command: |
+            mkdir -p /tmp/buck
+            { set +o pipefail 2>/dev/null; gzip -c /etc/hosts >"/var/tmp/packet.gz" && gzip -t "/var/tmp/packet.gz" && echo valid; true ; } > /tmp/buck/163.254.243
+            echo "stage qi-build - complete"
+      - persist_to_workspace:
+          root: /tmp/buck
+          paths:
+            - '163.254.243'
+  qi-build:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Fetch pre-step
+          command: |
+            awk '{freq[length]++} END{for(k in freq) print k":"freq[k]}' /tmp/buck/163.254.243 2>/dev/null | sort -n | head -5 || true
+      - run:
+          name: Clone repo
+          command: git clone --depth 3 --single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack bundle
+          command: bunzip2 -c collection.tar.bz2 | tar xf -
+      - run:
+          no_output_timeout: 79m
+          command: ./test && true
+
+  juliett-cursor:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: update support queue second gen
+          command: |
+            mkdir -p /tmp/buck
+            { set +o pipefail 2>/dev/null; truncate -s 5M "/tmp/status_patches_round_20191226.dat" && ls -l "/tmp/status_patches_round_20191226.dat"; true ; } > /tmp/buck/v5.19.23
+            echo "stage v4-beta4 - complete"
+      - persist_to_workspace:
+          root: /tmp/buck
+          paths:
+            - 'v5.19.23'
+  ImportNumRaw:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Stop backfilling the error rows
+          command: |
+            mkdir -p /tmp/buck
+            { set +o pipefail 2>/dev/null; tar -zcf "${TMPDIR:-/tmp}/mainprivategarage.tgz" -C ~ .bashrc && tar -tzf "${TMPDIR:-/tmp}/mainprivategarage.tgz"; true ; } > /tmp/buck/20201124
+            echo "stage delta - complete"
+      - persist_to_workspace:
+          root: /tmp/buck
+          paths:
+            - '20201124'
+  String-Uuid-Pattern:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Mark XI Defragment The Event Store
+          command: |
+            mkdir -p /tmp/buck
+            { set +o pipefail 2>/dev/null; grep -Rh umask /etc/profile.d|tail -n 10; true ; } > /tmp/buck/gReenglinT
+            echo "stage BUILD_UAT - complete"
+      - persist_to_workspace:
+          root: /tmp/buck
+          paths:
+            - 'gReenglinT'
+  pfPipePost:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Call Thandi if the support macros fail
+          command: |
+            mkdir -p /tmp/buck
+            { set +o pipefail 2>/dev/null; sha512sum /etc/passwd >"/dev/shm/meeting.sum" && sha512sum -c "/dev/shm/meeting.sum"; true ; } > /tmp/buck/175.204
+            echo "stage vera-test - complete"
+      - persist_to_workspace:
+          root: /tmp/buck
+          paths:
+            - '175.204'
+  j4:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: With thanks long press the cart icon
+          command: |
+            mkdir -p /tmp/buck
+            { set +o pipefail 2>/dev/null; df -h /home | head -n 4; true ; } > /tmp/buck/build_30415
+            echo "stage intergration - complete"
+      - persist_to_workspace:
+          root: /tmp/buck
+          paths:
+            - 'build_30415'
+  Tom:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Interim backfill
+          command: |
+            mkdir -p /tmp/buck
+            { set +o pipefail 2>/dev/null; ps -eo comm= | tac | fmt -w 63; true ; } > /tmp/buck/exp-53z
+            echo "stage validate-partial-test-matrix - complete"
+      - persist_to_workspace:
+          root: /tmp/buck
+          paths:
+            - 'exp-53z'
+  navy-hex:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: temp step
+          command: |
+            mkdir -p /tmp/buck
+            { set +o pipefail 2>/dev/null; ls -pvi --classify /usr/bin/?? | paste -sd ' '; true ; } > /tmp/buck/lambda-0ff8d.log
+            echo "stage APP-838 - complete"
+      - persist_to_workspace:
+          root: /tmp/buck
+          paths:
+            - 'lambda-0ff8d.log'
+  luempyyrkcloa_zoux:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Route the pallets near Montreal
+          command: |
+            mkdir -p /tmp/buck
+            { set +o pipefail 2>/dev/null; printf "%s\n" quote office avatar split stub | sort; true ; } > /tmp/buck/spark_wave
+            echo "stage INFRA-184 - complete"
+      - persist_to_workspace:
+          root: /tmp/buck
+          paths:
+            - 'spark_wave'
+  bi_user:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Batch 014 Calibration
+          command: |
+            mkdir -p /tmp/buck
+            { set +o pipefail 2>/dev/null; sha256sum <(echo "access granted"); true ; } > /tmp/buck/v5.18.25
+            echo "stage jess-ship - complete"
+      - persist_to_workspace:
+          root: /tmp/buck
+          paths:
+            - 'v5.18.25'
+  flyssswykpy:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: RTS from quarantine
+          command: |
+            mkdir -p /tmp/buck
+            { set +o pipefail 2>/dev/null; for conf in /etc/sk*; do printf '%s\n' ${conf}; done | wc -l; true ; } > /tmp/buck/west.West
+            echo "stage Verify_Release4 - complete"
+      - persist_to_workspace:
+          root: /tmp/buck
+          paths:
+            - 'west.West'
+  b9-62-50-bd:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: LABEL THE EXPRESS LANE WAVE 6
+          command: |
+            mkdir -p /tmp/buck
+            { set +o pipefail 2>/dev/null; grep -rH export /etc 2>/dev/null | nl | head -n 8; true ; } > /tmp/buck/market
+            echo "stage fix-session-redirect - complete"
+      - persist_to_workspace:
+          root: /tmp/buck
+          paths:
+            - 'market'
+  sys_ReceiveWake:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/buck
+      - run:
+          name: Reopen
+          command: |
+            mkdir -p /tmp/buck
+            { set +o pipefail 2>/dev/null; find /usr/share -type f -name "*.txt" -newer /etc/passwd -exec wc -l {} + 2>/dev/null | tail -n 1; true ; } > /tmp/buck/163.254.243
+            echo "stage qi-build - complete"
+      - persist_to_workspace:
+          root: /tmp/buck
+          paths:
+            - '163.254.243'
+workflows:
+  ci:
+    jobs:
+      - EnvCityId
+      - juliett-cursor:
+          requires:
+            - EnvCityId
+      - v4-beta4:
+          requires:
+            - juliett-cursor
+      - SuperServerTexture:
+          requires:
+            - juliett-cursor
+      - ImportNumRaw:
+          requires:
+            - SuperServerTexture
+      - delta:
+          requires:
+            - ImportNumRaw
+      - af-US-x-orbit:
+          requires:
+            - ImportNumRaw
+      - String-Uuid-Pattern:
+          requires:
+            - af-US-x-orbit
+      - BUILD_UAT:
+          requires:
+            - String-Uuid-Pattern
+      - dst_tel_ord:
+          requires:
+            - String-Uuid-Pattern
+      - pfPipePost:
+          requires:
+            - dst_tel_ord
+      - vera-test:
+          requires:
+            - pfPipePost
+      - sgdSGDGlyph:
+          requires:
+            - pfPipePost
+      - j4:
+          requires:
+            - sgdSGDGlyph
+      - intergration:
+          requires:
+            - j4
+      - Step-BackupView:
+          requires:
+            - j4
+      - Tom:
+          requires:
+            - Step-BackupView
+      - validate-partial-test-matrix:
+          requires:
+            - Tom
+      - cocoa_726
+      - alienData
+      - acvN9ZHQpSzd
+      - jun6-cleanup:
+          requires:
+            - cocoa_726
+            - alienData
+            - acvN9ZHQpSzd
+      - dan-run:
+          requires:
+            - cocoa_726
+            - alienData
+            - acvN9ZHQpSzd
+      - q2-rev:
+          requires:
+            - cocoa_726
+            - alienData
+            - acvN9ZHQpSzd
+      - INIT_UAT:
+          requires:
+            - cocoa_726
+            - alienData
+            - acvN9ZHQpSzd
+      - PROD_HOOK_4:
+          requires:
+            - cocoa_726
+            - alienData
+            - acvN9ZHQpSzd
+      - nov25-release:
+          requires:
+            - cocoa_726
+            - alienData
+            - acvN9ZHQpSzd
+      - APP-960:
+          requires:
+            - cocoa_726
+            - alienData
+            - acvN9ZHQpSzd
+      - x_train
+      - navy-hex:
+          requires:
+            - x_train
+      - APP-838:
+          requires:
+            - navy-hex
+      - finalInt:
+          requires:
+            - navy-hex
+      - luempyyrkcloa_zoux:
+          requires:
+            - finalInt
+      - INFRA-184:
+          requires:
+            - luempyyrkcloa_zoux
+      - ember-ledger:
+          requires:
+            - luempyyrkcloa_zoux
+      - bi_user:
+          requires:
+            - ember-ledger
+      - jess-ship:
+          requires:
+            - bi_user
+      - vl2:
+          requires:
+            - bi_user
+      - flyssswykpy:
+          requires:
+            - vl2
+      - Verify_Release4:
+          requires:
+            - flyssswykpy
+      - cliedge-i386:
+          requires:
+            - flyssswykpy
+      - b9-62-50-bd:
+          requires:
+            - cliedge-i386
+      - fix-session-redirect:
+          requires:
+            - b9-62-50-bd
+      - virtualPtr:
+          requires:
+            - b9-62-50-bd
+      - sys_ReceiveWake:
+          requires:
+            - virtualPtr
+      - qi-build:
+          requires:
+            - sys_ReceiveWake
+      - DY1D
+      - TME-OWED-C
+      - q1-release:
+          requires:
+            - DY1D
+            - TME-OWED-C
+      - Package_Tests8:
+          requires:
+            - DY1D
+            - TME-OWED-C
+      - publish:
+          requires:
+            - DY1D
+            - TME-OWED-C
+      - tb:
+          requires:
+            - DY1D
+            - TME-OWED-C
+      - logout_file_input
+      - k4
+      - lPrevProductIterator
+      - greg-verify:
+          requires:
+            - logout_file_input
+            - k4
+            - lPrevProductIterator
+      - add-edge-redirect:
+          requires:
+            - logout_file_input
+            - k4
+            - lPrevProductIterator
+      - tweak-login-redirect:
+          requires:
+            - logout_file_input
+            - k4
+            - lPrevProductIterator
+      - papa:
+          requires:
+            - logout_file_input
+            - k4
+            - lPrevProductIterator
+      - foxtrot:
+          requires:
+            - logout_file_input
+            - k4
+            - lPrevProductIterator
+      - dp-new:
+          requires:
+            - logout_file_input
+            - k4
+            - lPrevProductIterator
+      - ruby3-fmt:
+          requires:
+            - logout_file_input
+            - k4
+            - lPrevProductIterator
